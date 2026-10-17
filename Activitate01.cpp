@@ -1,5 +1,5 @@
 // Notite seminar: verificat alocarea dinamica pentru vectorul de preturi
-// Optimizare: validare parametri pentru pointeri inainte de initializare
+// Optimizare: validare parametri pentru pointeri inainte de initializare.
 #include<iostream>
 #include<string>
 
