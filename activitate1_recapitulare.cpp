@@ -77,7 +77,7 @@ void main() {
 	delete[] c.adresa;
 	delete[] c.proprietar;
 
-	//char* nume;
+	//char*  nume;
 	//char sirCaractere[20];
 
 	//cout << endl << "citim de la tastatura: ";
