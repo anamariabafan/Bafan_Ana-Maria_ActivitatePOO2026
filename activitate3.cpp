@@ -175,6 +175,7 @@ public:
 	}
 
 	//operatorul functie
+	//op fct
 	float operator()(float valoareDeAdaugat)
 	{
 		return this->vanzariTotale + valoareDeAdaugat;
@@ -295,7 +296,7 @@ void main() {
 
 	cout << *cofetarieRomana;
 
-	//Cofetarie cofetarieUnirii;
+	//Cofetarie  cofetarieUnirii;
 	//cin >> cofetarieUnirii;
 	//cout << cofetarieUnirii;
 
