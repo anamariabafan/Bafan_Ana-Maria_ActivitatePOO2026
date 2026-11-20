@@ -239,3 +239,137 @@ int main() {
 
     return 0;
 }
+
+
+//MODEL 2
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Student {
+private:
+    const int nrMatricol;   // atribut nemodificabil -> const int
+    string nume;            // text simplu -> string (nu necesita alocare dinamica)
+    int nrNote;             // dimensiunea vectorului (OBLIGATORIU cand ai vector dinamic!)
+    float* note;            // atribut alocat dinamic -> float*
+
+public:
+    // 1. Constructorul default (fara parametri)
+    Student() : nrMatricol(0) {
+        this->nume = "Anonim";
+        this->nrNote = 0;
+        this->note = nullptr;
+    }
+
+    // 2. Constructorul cu un parametru (ex: doar nrMatricol)
+    Student(int nrMatricol) : nrMatricol(nrMatricol) {
+        this->nume = "Anonim";
+        this->nrNote = 0;
+        this->note = nullptr;
+    }
+
+    // Constructor de copiere (obligatoriu cand ai pointeri)
+    Student(const Student& copie) : nrMatricol(copie.nrMatricol) {
+        this->nume = copie.nume;
+        this->nrNote = copie.nrNote;
+
+        if (copie.note != nullptr && copie.nrNote > 0) {
+            this->note = new float[this->nrNote];
+            for (int i = 0; i < this->nrNote; i++) {
+                this->note[i] = copie.note[i];
+            }
+        }
+        else {
+            this->note = nullptr;
+        }
+    }
+
+    // 3. Metoda get pentru atributul constant
+    int getNrMatricol() {
+        return this->nrMatricol;
+    }
+
+    // 4. Metoda set pentru vectorul alocat dinamic (primeste vectorul SI dimensiunea lui!)
+    void setNote(float* noteNoi, int nrNoteNoi) {
+        if (noteNoi != nullptr && nrNoteNoi > 0) {
+            // Pas 1: Dezaloaca memoria veche!
+            if (this->note != nullptr) {
+                delete[] this->note;
+            }
+            // Pas 2: Actualizeaza dimensiunea si aloca memorie noua
+            this->nrNote = nrNoteNoi;
+            this->note = new float[this->nrNote];
+            // Pas 3: Copiaza elementele cu for
+            for (int i = 0; i < this->nrNote; i++) {
+                this->note[i] = noteNoi[i];
+            }
+        }
+    }
+
+    // 5. Operatorul = (atribuire)
+    Student& operator=(const Student& copie) {
+        if (this != &copie) {
+            this->nume = copie.nume;
+            this->nrNote = copie.nrNote;
+
+            if (this->note != nullptr) {
+                delete[] this->note;
+                this->note = nullptr;
+            }
+
+            if (copie.note != nullptr && copie.nrNote > 0) {
+                this->note = new float[this->nrNote];
+                for (int i = 0; i < this->nrNote; i++) {
+                    this->note[i] = copie.note[i];
+                }
+            }
+            else {
+                this->note = nullptr;
+            }
+        }
+        return *this;
+    }
+
+    // 6. Metoda de afisare
+    void afisare() {
+        cout << endl << "Nr. Matricol: " << this->nrMatricol;
+        cout << endl << "Nume: " << this->nume;
+        cout << endl << "Nr. note: " << this->nrNote;
+        if (this->nrNote > 0 && this->note != nullptr) {
+            cout << " -> Note: ";
+            for (int i = 0; i < this->nrNote; i++) {
+                cout << this->note[i] << " ";
+            }
+        }
+        cout << endl;
+    }
+
+    // Destructor (obligatoriu ca sa nu ai memory leaks!)
+    ~Student() {
+        if (this->note != nullptr) {
+            delete[] this->note;
+            this->note = nullptr;
+        }
+    }
+};
+
+int main() {
+    Student s1;
+    s1.afisare();
+
+    Student s2(1050);
+    cout << endl << "Nr matricol s2: " << s2.getNrMatricol() << endl;
+
+    // Cand testezi setter-ul pentru vector, declari un vector local si il trimiti
+    float noteTest[] = { 9.5, 10, 8.75 };
+    s2.setNote(noteTest, 3);
+    s2.afisare();
+
+    Student s3;
+    s3 = s2;
+    s3.afisare();
+
+    return 0;
+}
