@@ -146,6 +146,7 @@
     <ClCompile Include="activitate4.cpp" />
     <ClCompile Include="autoturism.cpp" />
     <ClCompile Include="Bafan_Ana-Maria_ActivitatePOO2026.cpp" />
+    <ClCompile Include="model1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
